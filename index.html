@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#eff4ef" />
+    <meta name="description" content="Generate and solve 8 x 8 color block logic puzzles." />
+    <title>Block Logic | Puzzle Studio</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/app.js"></script>
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="/" aria-label="Block Logic home">
+                <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                <span>BLOCK<span class="brand-light">LOGIC</span></span>
+            </a>
+            <div class="topbar-note"><span class="live-dot"></span> PUZZLE STUDIO <span class="note-divider">/</span> 8
+                × 8</div>
+            <a class="product-link"
+                href="https://www.amazon.in/Kidology-Puzzle-Game-Focus-Problem-Solving/dp/B0FSRLPFXQ" target="_blank"
+                rel="noreferrer">Inspired by the color block puzzle <span aria-hidden="true">↗</span></a>
+        </header>
+
+        <main>
+            <section class="intro-row" aria-labelledby="page-title">
+                <div>
+                    <p class="eyebrow">A LITTLE SPACE. A LOT OF LOGIC.</p>
+                    <h1 id="page-title">Make every block <span>count.</span></h1>
+                </div>
+                <p class="intro-copy">Place the three black blockers. Fit every color piece into the square. No gaps, no
+                    overlaps.</p>
+            </section>
+
+            <nav class="mode-tabs" aria-label="Puzzle mode">
+                <button class="mode-tab is-active" id="random-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="random-panel">
+                    <span class="tab-index">01</span> Random levels
+                </button>
+                <button class="mode-tab" id="custom-tab" type="button" role="tab" aria-selected="false"
+                    aria-controls="custom-panel">
+                    <span class="tab-index">02</span> Set up a puzzle
+                </button>
+                <span class="tab-rule" aria-hidden="true"></span>
+            </nav>
+
+            <section class="workspace" id="random-panel" role="tabpanel" aria-labelledby="random-tab">
+                <div class="board-column">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow" id="board-kicker">GENERATED CHALLENGE</p>
+                            <h2 id="board-title">Your next puzzle</h2>
+                        </div>
+                        <span class="board-size">8 × 8 <span>GRID</span></span>
+                    </div>
+                    <div class="board-frame">
+                        <div class="board" id="board" role="grid" aria-label="8 by 8 puzzle board"></div>
+                        <div class="board-coordinates" aria-hidden="true">
+                            <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+                        </div>
+                    </div>
+                    <div class="board-legend" aria-label="Piece colors">
+                        <span><i class="legend-swatch swatch-black"></i>Fixed black pieces</span>
+                        <span><i class="legend-swatch swatch-white"></i>White</span>
+                        <span><i class="legend-swatch swatch-blue"></i>Blue</span>
+                        <span><i class="legend-swatch swatch-red"></i>Red</span>
+                        <span><i class="legend-swatch swatch-yellow"></i>Yellow</span>
+                    </div>
+                </div>
+
+                <aside class="control-panel" aria-label="Puzzle controls">
+                    <div class="panel-topline"><span id="panel-step">LEVEL 01</span><span
+                            class="panel-dot"></span><span>NO TIMER</span></div>
+                    <div id="random-controls">
+                        <h2>Ready when you are.</h2>
+                        <p class="panel-copy">A fresh arrangement of black pieces makes each level. The color blocks
+                            stay hidden until you ask for the answer.</p>
+                        <div class="piece-inventory" id="random-inventory" aria-label="Black pieces in this level">
+                        </div>
+                        <button class="button button-primary" id="new-level" type="button"><span
+                                aria-hidden="true">⟳</span> New random level</button>
+                        <button class="button button-secondary" id="check-random" type="button">Check solvability <span
+                                aria-hidden="true">→</span></button>
+                        <div class="result-box" id="random-result" aria-live="polite">
+                            <span class="result-indicator"></span><span class="result-text">Check this level to see if
+                                it can be solved.</span>
+                        </div>
+                        <button class="button button-reveal" id="reveal-random" type="button" disabled>Reveal solution
+                            <span aria-hidden="true">↗</span></button>
+                    </div>
+
+                    <div id="custom-controls" hidden>
+                        <h2>Build your setup.</h2>
+                        <p class="panel-copy">Select a black piece, then tap a starting cell. Tap a placed piece to
+                            remove it.</p>
+                        <div class="piece-inventory custom-inventory" id="custom-inventory"
+                            aria-label="Black piece rack"></div>
+                        <div class="orientation-row">
+                            <span>ORIENTATION</span>
+                            <button class="rotate-button" id="rotate-piece" type="button"
+                                aria-label="Rotate selected piece">↻ <span>Rotate</span></button>
+                        </div>
+                        <p class="selection-note" id="selection-note">Select a piece to place it.</p>
+                        <button class="button button-primary" id="check-custom" type="button">Check solvability <span
+                                aria-hidden="true">→</span></button>
+                        <button class="button button-secondary" id="clear-custom" type="button">Clear setup <span
+                                aria-hidden="true">×</span></button>
+                        <div class="result-box" id="custom-result" aria-live="polite">
+                            <span class="result-indicator"></span><span class="result-text">Place all three black pieces
+                                to begin.</span>
+                        </div>
+                        <button class="button button-reveal" id="reveal-custom" type="button" disabled>Reveal solution
+                            <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <div class="panel-foot"><span class="foot-mark">BL</span><span>One piece of each shape.<br />Every
+                            square must be covered.</span></div>
+                </aside>
+            </section>
+
+            <section class="piece-strip" aria-label="Pieces included in every puzzle">
+                <div class="strip-heading"><span>THE FULL SET</span><span>11 PIECES · 64 SQUARES</span></div>
+                <div class="piece-list" id="full-piece-list"></div>
+            </section>
+        </main>
+        <footer class="footer"><span>BLOCK LOGIC <span class="footer-separator">/</span> LOGIC JIGSAW</span><span>Built
+                for curious minds.</span></footer>
+    </div>
+</body>
+
+</html>
